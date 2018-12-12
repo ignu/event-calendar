@@ -18,6 +18,7 @@
     "verbose": true
   },
   "dependencies": {
+    "@iopipe/iopipe": "^1.11.1",
     "node-fetch": "^2.3.0"
   }
 }

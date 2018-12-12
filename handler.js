@@ -1,17 +1,24 @@
 'use strict';
 
 const { fetchMeetup } = require("./lib/fetchMeetup");
+const ioPipeFunc = require('@iopipe/iopipe')
+const iopipe = ioPipeFunc({token: process.env.IOPIPE_TOKEN})
+const {mark} = ioPipeFunc;
 
-module.exports.hello = (event, context, callback) => {
+module.exports.hello = iopipe((event, context, callback) => {
+  mark.start("fetch")
   fetchMeetup("Seattle-Dungeons-And-Dragons", (body) => {
+    mark.end("fetch")
     const response = {
       statusCode: 200,
-      body
+      body: {
+        evevnts: body
+      }
     };
 
     callback(null, response);
   })
-};
+});
 
 module.exports.index = (event, context, callback) => {
   console.log("fetching index", event);
