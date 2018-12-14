@@ -5,14 +5,16 @@ const ioPipeFunc = require('@iopipe/iopipe')
 const iopipe = ioPipeFunc({token: process.env.IOPIPE_TOKEN})
 const {mark} = ioPipeFunc;
 
-module.exports.hello = iopipe((event, context, callback) => {
+module.exports.hello = iopipe(async (event, context, callback) => {
   mark.start("fetch")
+  console.log("FETCHING...")
   fetchMeetup("Seattle-Dungeons-And-Dragons", (body) => {
+    console.log(body)
     mark.end("fetch")
     const response = {
       statusCode: 200,
       body: {
-        evevnts: body
+        events: body
       }
     };
 
